@@ -139,12 +139,43 @@ sap.ui.define([
 
 
         },
+
         onDialogClose:function(){
             this.dlgVaccination.then(function (oDialog) {
                   oDialog.close();
             });
             },     
+
         onDialogAccept:function(){
+            const msg = this.getView().getModel('i18n').getProperty('recordAdded');
+            const modeloAdd = this.getModel("ModeloAddVacunacion").getData(); 
+
+            let rc = new JSONModel({                
+                'Begda': '',
+                'VacunaId': ''                
+            });
+
+            this.modeloAddVacunacion.getProperty('/Fecha', modeloAdd.Begda);  
+            this.modeloAddVacunacion.getProperty('/selVacuna', modeloAdd.VacunaId);  
+
+            this.getView().setBusy(true);
+
+            this.oDataModel.create('/VaccinationSet', rc.oData, {                
+                success: oData => {                                   
+                    this.getView().setBusy(false);                                         
+                    MessageToast.show(msg);
+                },
+
+                error: e => {
+                    this.getView().setBusy(false);
+                    const errorMessage = JSON.parse(e.responseText).error.message.value
+                    MessageToast.show(errorMessage);
+                }
+            });
+
+          this.dlgVaccination.then(function (oDialog) {
+                oDialog.close();
+          });
 
         },             
 
