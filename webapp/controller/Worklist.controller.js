@@ -154,9 +154,9 @@ sap.ui.define([
                 'Begda': '',
                 'VacunaId': ''                
             });
-
-            this.modeloAddVacunacion.getProperty('/Fecha', modeloAdd.Begda);  
-            this.modeloAddVacunacion.getProperty('/selVacuna', modeloAdd.VacunaId);  
+            
+            rc.setProperty("/Begda",modeloAdd.Fecha);
+            rc.setProperty("/VacunaId",modeloAdd.selVacuna);            
 
             this.getView().setBusy(true);
 
