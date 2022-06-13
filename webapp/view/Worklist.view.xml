@@ -1,0 +1,132 @@
+<mvc:View
+    controllerName="reportevacunacion.controller.Worklist"       
+   	xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:semantic="sap.f.semantic"
+    xmlns="sap.m" >
+
+    <semantic:SemanticPage
+        id="page"
+        headerPinnable="false"
+        toggleHeaderOnTitleClick="false">
+
+        <semantic:titleHeading>
+            <Title
+                text="{i18n>worklistTitle}"
+                level="H2"/>
+        </semantic:titleHeading>
+
+        <semantic:titleMainAction>
+            <semantic:TitleMainAction text="Mostrar" press="onMostrar"/>
+        </semantic:titleMainAction>     
+
+         <semantic:titleCustomTextActions>
+            <Button text="Añadir" icon="sap-icon://create"
+                    press="onCrear"
+                    visible="{ModeloVacunacion>/actualizar}"/>            
+        </semantic:titleCustomTextActions>    
+
+        <semantic:content> 
+            
+            <Table
+                id="table"
+                width="auto"
+                items="{
+                    path: 'ModeloVacunacion>/lista',
+                    sorter: {
+                        path: 'Pernr',
+                        descending: false
+                    }
+                }"
+                noDataText="{worklistView>/tableNoDataText}"
+                busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+                growing="true"
+                growingScrollToLoad="true"
+                updateFinished=".onUpdateFinished">
+
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title
+                            id="tableHeader"
+                            text="{worklistView>/worklistTableTitle}"
+                            level="H3"/>
+                        <ToolbarSpacer />                       
+
+                        <Label class="sapUiTinyMarginEnd" 
+                               text="{ModeloFiltro>/Test}" />
+
+                        <Label class="sapUiTinyMarginEnd" 
+                               text="{i18n>worklistLabelVaccineType}" />
+
+                        <ComboBox
+                                selectedKey="{ModeloVacunas>/selVacuna}"  
+                                selectionChange=".onSelectVaccine" 
+                                forceSelection="false"
+                                items="{
+	                                    path: 'ModeloVacunas>/listaVacunas'	                                    
+	                                   }">
+                                <core:Item key="{ModeloVacunas>Key}" 
+                                           text="{ModeloVacunas>Value}" />
+                        </ComboBox>
+                        
+                        <Label class="sapUiTinyMarginEnd" 
+                               text="{i18n>worklistLabelSearch}" />
+                        <SearchField
+                            id="searchField"
+                            tooltip="{i18n>worklistSearchTooltip}"
+                            value="{ModeloFiltro>/Pernr}"
+                            search=".onSearch">
+                            <layoutData>
+                                <OverflowToolbarLayoutData
+                                    maxWidth="200px"
+                                    priority="NeverOverflow"/>
+                            </layoutData>
+                        </SearchField>                        
+                    </OverflowToolbar>
+                </headerToolbar>
+
+                <columns>
+                    <Column >
+                        <Text text="{i18n>tablePernrTitle}" />
+                    </Column>                    
+                    <Column >
+                        <Text text="{i18n>tableFechaVacunacionTitle}" />
+                    </Column>
+                    <Column >
+                        <Text text="{i18n>tableNombreTitle}" />
+                    </Column>                                        
+                    <Column >
+                        <Text text="{i18n>tableVacunaTitle}" />
+                    </Column>                    
+                </columns>
+
+                <items >
+                    <ColumnListItem
+                        type="Navigation"
+                        press=".onPress">
+                        <cells>
+                         <ObjectIdentifier
+									title="{ModeloVacunacion>Pernr}"/>                                 
+                                
+                         <ObjectIdentifier
+									title="{ path: 'ModeloVacunacion>Begda',
+                                             type: 'sap.ui.model.type.Date',
+                                             formatOptions: { style: 'medium',
+                                                              UTC:false
+                                                             }
+                                            }" />                      
+                         <Text text = "{ModeloVacunacion>Nombre}"/>                                                                                                                         
+                         <Text text = "{ModeloVacunacion>VacunaTxt}"/>                            
+                         </cells>                                                  
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </semantic:content>
+
+        <semantic:sendEmailAction>
+            <semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
+        </semantic:sendEmailAction>
+
+    </semantic:SemanticPage>
+
+</mvc:View>
