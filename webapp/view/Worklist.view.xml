@@ -20,14 +20,39 @@
             <semantic:TitleMainAction text="Mostrar" press="onMostrar"/>
         </semantic:titleMainAction>     
 
-         <semantic:titleCustomTextActions>
+        <semantic:titleCustomTextActions>
             <Button text="Añadir/Modificar" icon="sap-icon://create"
                     press="onCrear"
                     visible="{ModeloVacunacion>/actualizar}"/>            
         </semantic:titleCustomTextActions>    
 
-        <semantic:content> 
-            
+
+        <semantic:headerContent>             
+            <HBox justifyContent="Center">                                           
+            <VBox >                                    
+              <Avatar
+				src="{/LightBox}"
+                backgroundColor="TileIcon"
+				displaySize="L"
+				displayShape="Circle" 
+                class="sapUiSmallMarginCenter"
+                id="avatar">
+              </Avatar>    
+            </VBox>      
+            </HBox>               
+            <HBox justifyContent="Center">
+            <VBox >                                    
+            <Title text="Nombre" id="labelNombre" level="h3"  />            
+            </VBox> 
+            </HBox>
+            <HBox justifyContent="Center">
+            <VBox >            
+            <Title text="" id="cid1" level="h4"></Title>  		    
+            </VBox> 
+            </HBox>                                                
+        </semantic:headerContent>
+
+        <semantic:content>         
             <Table
                 id="table"
                 width="auto"
@@ -46,6 +71,7 @@
 
                 <headerToolbar>
                     <OverflowToolbar>
+                             
                         <Title
                             id="tableHeader"
                             text="{worklistView>/worklistTableTitle}"
@@ -70,10 +96,10 @@
                         </ComboBox>
                         
                         <Label class="sapUiTinyMarginEnd" 
-                               text="{i18n>worklistLabelSearch}" />
+                               text="{i18n>worklistLabelSearchPernr}" />
                         <SearchField
-                            id="searchField"
-                            tooltip="{i18n>worklistSearchTooltip}"
+                            id="searchFieldPernr"
+                            tooltip="{i18n>worklistSearchPernrTooltip}"
                             value="{ModeloFiltro>/Pernr}"
                             search=".onSearch">
                             <layoutData>
@@ -81,7 +107,22 @@
                                     maxWidth="200px"
                                     priority="NeverOverflow"/>
                             </layoutData>
-                        </SearchField>                        
+                        </SearchField>            
+
+                        <Label class="sapUiTinyMarginEnd" 
+                               text="{i18n>worklistLabelSearchName}" />
+                        <SearchField
+                            id="searchFieldName"
+                            tooltip="{i18n>worklistSearchNameTooltip}"
+                            value="{ModeloFiltro>/Name}"
+                            search=".onSearchName">
+                            <layoutData>
+                                <OverflowToolbarLayoutData
+                                    maxWidth="200px"
+                                    priority="NeverOverflow"/>
+                            </layoutData>
+                        </SearchField>            
+                        
                     </OverflowToolbar>
                 </headerToolbar>
 

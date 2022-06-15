@@ -23,8 +23,14 @@ sap.ui.define([
          */
         onInit : function () {            
             const view = this.getView();
+            const Hoy = new Date();
             var oViewModel;
             let fl_actualizar = false;
+            let oModelAvatar = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZETECSA_NOMINA_SRV", false);
+            let oView = this.getView();
+            
+            let anno = Hoy.getFullYear();
+            let mes = Hoy.toISOString().substring(5, 7);        
 
             // keeps the search state
             this._aTableSearchState = [];
@@ -57,6 +63,7 @@ sap.ui.define([
             this.modeloFilter = new JSONModel({                
                 Pernr:'',
                 Vacuna:'',
+                Name:'',
                 Test:''                
             });
 
@@ -89,6 +96,33 @@ sap.ui.define([
                this.modeloFilter.setProperty("/Test","001");
             else
                this.modeloFilter.setProperty("/Test","002");   */
+
+            oModelAvatar.read("/SalarioCIDInfoSet", {
+				success: function _OnSuccess(oData, response) {
+					oView.setBusy(false);
+					
+					sap.ui.getCore().CID = oData.results[0].Pernr;									
+					
+					if (oData.results[0].Uri===""){
+						oView.byId("avatar").setInitials(oData.results[0].Vorna.substring(0,1)+oData.results[0].Nachn.substring(0,1));
+					}else{
+						oView.byId("avatar").setSrc(oData.results[0].Uri);					
+					}
+
+					oView.byId("labelNombre").setText(oData.results[0].Vorna + " " + oData.results[0].Nachn + " " + oData.results[0].Nach2);
+					oView.byId("cid1").setText(`#${oData.results[0].Pernr}`);
+//					oView.byId("cid2").setText("Numero personal: " + oData.results[0].Pernr);
+					
+					//Lamada a la funcion de lectura de la imagen del trabajador
+					var _path = "/sap/opu/odata/sap/ZETECSA_NOMINA_SRV/FileSet(Pernr='" + sap.ui.getCore().CID + "',Gjahr='" + anno + "',Monat='" +
+					mes + "',Id='SalarioCIDInfo')/$value"; //?$expand=ToResumen,ToCabecera";
+					oView.byId("avatar").setSrc(_path);	
+					
+				},
+				error: function _OnError(oError) {
+					oView.setBusy(false);
+				}
+			});   
             
         },
 
@@ -111,6 +145,12 @@ sap.ui.define([
                 aTableSearchState.push(new Filter("Pernr", 
                                            FilterOperator.Contains,
                                            datoFiltro.Pernr));                           
+            }
+
+            if (datoFiltro.Name !== ""){                
+                aTableSearchState.push(new Filter("Nombre", 
+                                           FilterOperator.Contains,
+                                           datoFiltro.Name));                           
             }
 
             this._applySearch(aTableSearchState); 
@@ -340,7 +380,13 @@ sap.ui.define([
                   //  aTableSearchState = [new Filter("Pernr", FilterOperator.Contains, sQuery)];
                   aTableSearchState.push(new Filter("Pernr", 
                                              FilterOperator.Contains, 
-                                             sQuery));
+                                             sQuery));                                             
+                }
+
+                if (datoVacunas.Name && datoVacunas.Pernr.length > 0) {                  
+                    aTableSearchState.push(new Filter("Nombre", 
+                                               FilterOperator.Contains, 
+                                               datoVacunas.Name));
                 }
                  
                 if (datoVacunas.selVacuna !== "") {
@@ -348,6 +394,42 @@ sap.ui.define([
                                                FilterOperator.EQ, 
                                                datoVacunas.selVacuna));   
                 }    
+                
+                this._applySearch(aTableSearchState);
+            }
+
+        },
+
+        onSearchName : function (oEvent) {
+            const datoVacunas = this.getView().getModel("ModeloVacunas").getData();
+
+            if (oEvent.getParameters().refreshButtonPressed) {
+                // Search field's 'refresh' button has been pressed.
+                // This is visible if you select any main list item.
+                // In this case no new search is triggered, we only
+                // refresh the list binding.
+                this.onRefresh();
+            } else {
+                var aTableSearchState = [];
+                var sQuery = oEvent.getParameter("query");
+
+                if (sQuery && sQuery.length > 0) {                  
+                  aTableSearchState.push(new Filter("Nombre", 
+                                             FilterOperator.Contains, 
+                                             sQuery));
+                }
+                 
+                if (datoVacunas.selVacuna !== "") {
+                    aTableSearchState.push(new Filter("VacunaId", 
+                                               FilterOperator.EQ, 
+                                               datoVacunas.selVacuna));   
+                }
+                
+                if (datoVacunas.Pernr && datoVacunas.Pernr.length > 0) {                  
+                    aTableSearchState.push(new Filter("Pernr", 
+                                               FilterOperator.Contains, 
+                                               datoVacunas.Pernr));
+                  }
                 
                 this._applySearch(aTableSearchState);
             }
