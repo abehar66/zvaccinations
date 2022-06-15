@@ -21,7 +21,7 @@
         </semantic:titleMainAction>     
 
          <semantic:titleCustomTextActions>
-            <Button text="Añadir" icon="sap-icon://create"
+            <Button text="Añadir/Modificar" icon="sap-icon://create"
                     press="onCrear"
                     visible="{ModeloVacunacion>/actualizar}"/>            
         </semantic:titleCustomTextActions>    
@@ -112,7 +112,7 @@
 									title="{ path: 'ModeloVacunacion>Begda',
                                              type: 'sap.ui.model.type.Date',
                                              formatOptions: { style: 'medium',
-                                                              UTC:false
+                                                              UTC:true
                                                              }
                                             }" />                      
                          <Text text = "{ModeloVacunacion>Nombre}"/>                                                                                                                         

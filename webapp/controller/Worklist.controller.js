@@ -161,9 +161,9 @@ sap.ui.define([
             this.getView().setBusy(true);
 
             this.oDataModel.create('/VaccinationSet', rc.oData, {                
-                success: oData => {                                   
-                    this.getView().setBusy(false);                                         
-                    MessageToast.show(msg);
+                success: oData => {                                                                                              
+                    this.loadTableData();
+                    this.getView().setBusy(false);                    
                 },
 
                 error: e => {

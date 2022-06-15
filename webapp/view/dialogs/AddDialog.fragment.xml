@@ -39,7 +39,7 @@
                              formatOptions: {
                              pattern: 'dd/MM/yyyy',
                                        strictParsing: true,
-                                        UTC:false
+                                        UTC:true
                                     }}"
                       class="sapUiSmallMarginBottom"/>
         <FlexBox>              
