@@ -81,6 +81,7 @@ sap.ui.define([
             this.oDataModel = new ODataModel('/sap/opu/odata/sap/ZETECSA_NOMINA_SRV');
 
             this.loadTableVaccineType();
+            this.loadTableData();
 
             this.modeloFilter.setProperty("/Pernr","");            
             /*this.modeloFilter.setProperty("/Test","000");

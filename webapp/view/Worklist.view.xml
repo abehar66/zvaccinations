@@ -3,7 +3,8 @@
    	xmlns:core="sap.ui.core"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:semantic="sap.f.semantic"
-    xmlns="sap.m" >
+    xmlns="sap.m"
+    xmlns:f="sap.f" >
 
     <semantic:SemanticPage
         id="page"
@@ -17,7 +18,9 @@
         </semantic:titleHeading>
 
         <semantic:titleMainAction>
-            <semantic:TitleMainAction text="Mostrar" press="onMostrar"/>
+            <semantic:TitleMainAction text="Mostrar" 
+                                      press="onMostrar"
+                                      visible="false"/>
         </semantic:titleMainAction>     
 
         <semantic:titleCustomTextActions>
@@ -30,14 +33,14 @@
         <semantic:headerContent>             
             <HBox justifyContent="Center">                                           
             <VBox >                                    
-              <Avatar
+              <f:Avatar
 				src="{/LightBox}"
                 backgroundColor="TileIcon"
 				displaySize="L"
 				displayShape="Circle" 
                 class="sapUiSmallMarginCenter"
                 id="avatar">
-              </Avatar>    
+              </f:Avatar>    
             </VBox>      
             </HBox>               
             <HBox justifyContent="Center">
