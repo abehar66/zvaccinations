@@ -365,6 +365,7 @@ sap.ui.define([
 
         onSearch : function (oEvent) {
             const datoVacunas = this.getView().getModel("ModeloVacunas").getData();
+            const datoFiltro = this.getModel("ModeloFiltro").getData();
 
             if (oEvent.getParameters().refreshButtonPressed) {
                 // Search field's 'refresh' button has been pressed.
@@ -383,10 +384,10 @@ sap.ui.define([
                                              sQuery));                                             
                 }
 
-                if (datoVacunas.Name && datoVacunas.Pernr.length > 0) {                  
+                if (datoFiltro.Name && datoFiltro.Name.length > 0) {                  
                     aTableSearchState.push(new Filter("Nombre", 
                                                FilterOperator.Contains, 
-                                               datoVacunas.Name));
+                                               datofiltro.Name));
                 }
                  
                 if (datoVacunas.selVacuna !== "") {
@@ -402,6 +403,7 @@ sap.ui.define([
 
         onSearchName : function (oEvent) {
             const datoVacunas = this.getView().getModel("ModeloVacunas").getData();
+            const datoFiltro = this.getModel("ModeloFiltro").getData();
 
             if (oEvent.getParameters().refreshButtonPressed) {
                 // Search field's 'refresh' button has been pressed.
@@ -425,10 +427,10 @@ sap.ui.define([
                                                datoVacunas.selVacuna));   
                 }
                 
-                if (datoVacunas.Pernr && datoVacunas.Pernr.length > 0) {                  
+                if (datoFiltro.Pernr && datoFiltro.Pernr.length > 0) {                  
                     aTableSearchState.push(new Filter("Pernr", 
                                                FilterOperator.Contains, 
-                                               datoVacunas.Pernr));
+                                               datoFiltro.Pernr));
                   }
                 
                 this._applySearch(aTableSearchState);
