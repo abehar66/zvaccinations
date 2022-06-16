@@ -17,7 +17,7 @@ builder:
           url: http://sapfioriprod.etecsa.cu:8000
           client: "100"
         app:
-          name: ZVACCINATIONS
+          name: ZVACCINATION
           description: Reporte Vacunaciones
           package: Z900_ETECSA_FIORI
           transport: FIPK900084
