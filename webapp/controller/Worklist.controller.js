@@ -388,7 +388,7 @@ sap.ui.define([
                 if (datoFiltro.Name && datoFiltro.Name.length > 0) {                  
                     aTableSearchState.push(new Filter("Nombre", 
                                                FilterOperator.Contains, 
-                                               datofiltro.Name));
+                                               datoFiltro.Name));
                 }
                  
                 if (datoVacunas.selVacuna !== "") {
