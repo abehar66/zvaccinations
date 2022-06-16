@@ -3,7 +3,7 @@
                          xmlns:l="sap.ui.layout"
                          xmlns:f="sap.ui.layout.form"
                          xmlns:u="sap.ui.unified">
-    <Dialog title="Añadir Vacunación">
+    <Dialog title="{i18n>addFormTitle}">
      <l:Grid defaultSpan="L12 M12 S12" width="auto" id="idGrid">
         <l:content>
         <f:SimpleForm id="SimpleFormDisplay354"
@@ -33,7 +33,7 @@
          </ComboBox>           
 
          <Label class="sapUiTinyMarginEnd" 
-                text="Fecha Vacunación:" />   
+                text="{i18n>tableFechaVacunacionTitle}:" />   
          <DatePicker value="{path:'ModeloAddVacunacion>/Fecha',
                              type:'sap.ui.model.type.Date',
                              formatOptions: {
@@ -43,7 +43,7 @@
                                     }}"
                       class="sapUiSmallMarginBottom"/>
         <FlexBox>              
-        <Button text="Aceptar"
+        <Button text="{i18n>acceptText}"
                 type="Accept"
                 press="onDialogAccept"
                 class="sapUiSmallMarginBottom">
@@ -51,7 +51,7 @@
                 <FlexItemData growFactor="1"/>
             </layoutData>
         </Button>
-        <Button text="Cancelar"
+        <Button text="{i18n>cancelText}"
                 type="Reject"
                 press="onDialogClose"
                 class="sapUiSmallMarginBottom">
